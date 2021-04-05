@@ -28,9 +28,9 @@ const getOneAnnouncement = async (req, res, next) => {
     try {
         const {query} = req;
 
-        const {name, price, images: [mainPhoto]} = await getOneAnnouncementFromDB(query)
+        const announcement = await getOneAnnouncementFromDB(query)
 
-        res.json({name, price, mainPhoto});
+        res.json(announcement);
     } catch (err) {
         next(err);
     }

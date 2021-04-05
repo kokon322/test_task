@@ -37,7 +37,17 @@ const getAllAnnouncements = async (query = {}) => {
     return result;
 };
 
-const getOneAnnouncementFromDB = (query) => Announcement.findOne(query);
+const getOneAnnouncementFromDB = async (query) => {
+    if ('fields' in query) {
+        const withFields = await Announcement.findOne({_id: query._id});
+
+        return withFields;
+    } else {
+        const {name, price, images: [mainPhoto]} = await Announcement.findOne(query);
+
+        return {name, price, mainPhoto};
+    }
+};
 
 const createAnnouncement = (announcement) => Announcement.create(announcement);
 
