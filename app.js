@@ -14,6 +14,10 @@ app.use(express.urlencoded({extended: true}));
 
 app.use('/', apiRouter);
 
+app.use('*', (err, req, res, next) => {
+    res.json(err.message).status(err.status);
+});
+
 _ConnectToDB();
 
 app.listen(PORT, () => {

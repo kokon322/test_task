@@ -1,4 +1,5 @@
 const {Announcement: {Announcement}} = require('../dataBase');
+const {sortConstant: {BIGGEST_PRICE, MINIMUM_PRICE, BIGGEST_DATA, MINIMUM_DATA}} = require('../constants');
 
 const getAllAnnouncements = async (query = {}) => {
     const {limit = 10, page = 1, ...filters} = query;
@@ -11,16 +12,16 @@ const getAllAnnouncements = async (query = {}) => {
 
     keys.forEach(key => {
         switch (key) {
-            case 'biggestPrice':
+            case BIGGEST_PRICE:
                 sortObject.price = -1;
                 break;
-            case 'minimumPrice':
+            case MINIMUM_PRICE:
                 sortObject.price = 1;
                 break;
-            case 'biggestData':
+            case BIGGEST_DATA:
                 sortObject.createdAt = -1;
                 break;
-            case 'minimumData':
+            case MINIMUM_DATA:
                 sortObject.createdAt = 1;
                 break;
             default :
@@ -29,9 +30,10 @@ const getAllAnnouncements = async (query = {}) => {
     })
     const announcements = await Announcement.find().limit(limit).skip(skip).sort(sortObject);
 
-    const result = announcements.map(({name, price, images: [first]}) => {
-        return {name, price, first};
+    const result = announcements.map(({name, price, images: [mainPhoto]}) => {
+        return {name, price, mainPhoto};
     });
+
     return result;
 };
 
