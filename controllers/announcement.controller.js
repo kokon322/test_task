@@ -9,7 +9,7 @@ const {
 
 const getAnnouncements = async (req, res, next) => {
     try {
-        const announcements = await getAllAnnouncements();
+        const announcements = await getAllAnnouncements(req.query);
 
         res.json(announcements);
     } catch (err) {
