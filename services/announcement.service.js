@@ -1,6 +1,8 @@
 const {Announcement: {Announcement}} = require('../dataBase');
 const {sortConstant: {BIGGEST_PRICE, MINIMUM_PRICE, BIGGEST_DATA, MINIMUM_DATA}} = require('../constants');
 
+//example url : http://localhost:5000/announcements/?biggestPrice&&page=1
+
 const getAllAnnouncements = async (query = {}) => {
     const {limit = 10, page = 1, ...filters} = query;
 
