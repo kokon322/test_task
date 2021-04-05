@@ -1,16 +1,22 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+
+dotenv.config();
+
+const {MONGO_URL, PORT} = require('./configs/config');
+const apiRouter = require('./routes/api.route');
 
 const app = express();
-
-MONGO_URL = 'mongodb://localhost/test_task';
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
+app.use('/', apiRouter);
+
 _ConnectToDB();
 
-app.listen('5000', () => {
+app.listen(PORT, () => {
     console.log('5000 work');
 });
 
